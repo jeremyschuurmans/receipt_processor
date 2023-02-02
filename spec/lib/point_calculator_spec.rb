@@ -49,23 +49,9 @@ describe "PointCalculator" do
     "total": "9.00"
   }
 
-  let(:receipt_one) { Receipt.new(
-    JSON_SAMPLE_ONE[:retailer],
-    JSON_SAMPLE_ONE[:purchaseDate],
-    JSON_SAMPLE_ONE[:purchaseTime],
-    JSON_SAMPLE_ONE[:items],
-    JSON_SAMPLE_ONE[:total],
-    )
-  }
+  let(:receipt_one) { Receipt.new(JSON_SAMPLE_ONE) }
 
-  let(:receipt_two) { Receipt.new(
-    JSON_SAMPLE_TWO[:retailer],
-    JSON_SAMPLE_TWO[:purchaseDate],
-    JSON_SAMPLE_TWO[:purchaseTime],
-    JSON_SAMPLE_TWO[:items],
-    JSON_SAMPLE_TWO[:total],
-    )
-  }
+  let(:receipt_two) { Receipt.new(JSON_SAMPLE_TWO) }
 
   let(:point_calculator_first_receipt) { PointCalculator.new(receipt_one) }
   let(:point_calculator_second_receipt) { PointCalculator.new(receipt_two) }

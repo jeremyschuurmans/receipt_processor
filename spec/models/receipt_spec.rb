@@ -1,35 +1,56 @@
 require "rails_helper"
 
 describe Receipt do
-  let(:receipt) {
-    Receipt.new(
-      "Target",
-      "2022-01-01",
-      "13:01",
-      [
-        {
-          "shortDescription": "Sandwich",
-          "price": "5.98"
-        }
-      ],
-      "5.98"
-    )
+  JSON_SAMPLE_ONE = {
+    "retailer": "Target",
+    "purchaseDate": "2022-01-01",
+    "purchaseTime": "13:01",
+    "items": [
+      {
+        "shortDescription": "Mountain Dew 12PK",
+        "price": "6.49"
+      },{
+        "shortDescription": "Emils Cheese Pizza",
+        "price": "12.25"
+      },{
+        "shortDescription": "Knorr Creamy Chicken",
+        "price": "1.26"
+      },{
+        "shortDescription": "Doritos Nacho Cheese",
+        "price": "3.35"
+      },{
+        "shortDescription": "   Klarbrunn 12-PK 12 FL OZ  ",
+        "price": "12.00"
+      }
+    ],
+    "total": "35.35"
   }
 
-  let(:another_receipt) {
-    Receipt.new(
-      "Costco",
-      "2022-01-02",
-      "10:34",
-      [
-        {
-          "shortDescription": "Chicken Bake",
-          "price": "3.50"
-        }
-      ],
-      "3.50"
-    )    
+  JSON_SAMPLE_TWO = {
+    "retailer": "M&M Corner Market",
+    "purchaseDate": "2022-03-20",
+    "purchaseTime": "14:33",
+    "items": [
+      {
+        "shortDescription": "Gatorade",
+        "price": "2.25"
+      },{
+        "shortDescription": "Gatorade",
+        "price": "2.25"
+      },{
+        "shortDescription": "Gatorade",
+        "price": "2.25"
+      },{
+        "shortDescription": "Gatorade",
+        "price": "2.25"
+      }
+    ],
+    "total": "9.00"
   }
+
+  let(:receipt) { Receipt.new(JSON_SAMPLE_ONE) }
+
+  let(:another_receipt) { Receipt.new(JSON_SAMPLE_TWO) }
 
   UUID_REGEX = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/
 
@@ -50,13 +71,13 @@ describe Receipt do
   end
 
   it "has items" do
-    expect(receipt.items.size).to eq(1)
-    expect(receipt.items.first[:shortDescription]).to eq("Sandwich")
-    expect(receipt.items.first[:price]).to eq("5.98")
+    expect(receipt.items.size).to eq(5)
+    expect(receipt.items.first[:shortDescription]).to eq("Mountain Dew 12PK")
+    expect(receipt.items.first[:price]).to eq("6.49")
   end
 
   it "has a total" do
-    expect(receipt.total).to eq("5.98")
+    expect(receipt.total).to eq("35.35")
   end
 
   it "has points and defaults to 0" do

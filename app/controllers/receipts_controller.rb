@@ -3,7 +3,7 @@ require "./lib/point_calculator"
 class ReceiptsController < ApplicationController
   def create
     begin
-      receipt = Receipt.new(params["retailer"], params["purchaseDate"], params["purchaseTime"], params["items"], params["total"])
+      receipt = Receipt.new(params)
       receipt.points = PointCalculator.new(receipt).process_receipt
       receipt.save
 

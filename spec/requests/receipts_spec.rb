@@ -81,15 +81,7 @@ RSpec.describe "Receipts", type: :request do
       "total": "35.35"
     }
 
-    let(:receipt) { 
-      Receipt.new(
-        params[:retailer],
-        params[:purchaseDate],
-        params[:purchaseTime],
-        params[:items],
-        params[:total],
-      )
-    }
+    let(:receipt) { Receipt.new(params) }
 
     before do
       receipt.points = PointCalculator.new(receipt).process_receipt
