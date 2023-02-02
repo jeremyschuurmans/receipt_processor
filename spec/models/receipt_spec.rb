@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe Receipt do
-  JSON_SAMPLE_ONE = {
+  RECEIPT_ONE = {
     "retailer": "Target",
     "purchaseDate": "2022-01-01",
     "purchaseTime": "13:01",
@@ -26,7 +26,7 @@ describe Receipt do
     "total": "35.35"
   }
 
-  JSON_SAMPLE_TWO = {
+  RECEIPT_TWO = {
     "retailer": "M&M Corner Market",
     "purchaseDate": "2022-03-20",
     "purchaseTime": "14:33",
@@ -48,9 +48,9 @@ describe Receipt do
     "total": "9.00"
   }
 
-  let(:receipt) { Receipt.new(JSON_SAMPLE_ONE) }
+  let(:receipt) { Receipt.new(RECEIPT_ONE) }
 
-  let(:another_receipt) { Receipt.new(JSON_SAMPLE_TWO) }
+  let(:another_receipt) { Receipt.new(RECEIPT_TWO) }
 
   UUID_REGEX = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/
 
