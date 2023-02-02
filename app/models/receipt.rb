@@ -2,7 +2,7 @@ require 'securerandom'
 
 class Receipt
   attr_reader :retailer, :purchase_date, :purchase_time, :items, :total
-  attr_accessor :id
+  attr_accessor :id, :points
 
   @@receipts = []
 
@@ -13,6 +13,7 @@ class Receipt
     @purchase_time = purchase_time
     @items = items
     @total = total
+    @points = 0
   end
 
   def generate_uuid

@@ -59,6 +59,10 @@ describe Receipt do
     expect(receipt.total).to eq("5.98")
   end
 
+  it "has points and defaults to 0" do
+    expect(receipt.points).to eq(0)
+  end
+
   describe "#generate_uuid" do
     it "generates a uuid" do
       expect(receipt.generate_uuid).to match(UUID_REGEX)
