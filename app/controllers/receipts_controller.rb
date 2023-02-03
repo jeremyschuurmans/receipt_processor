@@ -7,9 +7,9 @@ class ReceiptsController < ApplicationController
       receipt.points = PointCalculator.new(receipt).process_receipt
       receipt.save
 
-      render json: { "id": receipt.id }.to_json
-    rescue StandardError => e
-      render json: { "status": 400, "errors": "The receipt is invalid" }.to_json
+      render json: { "id": receipt.id }
+    rescue StandardError
+      render json: { "status": 400, "errors": "The receipt is invalid" }, status: 400
     end
   end
 
@@ -17,9 +17,9 @@ class ReceiptsController < ApplicationController
     begin
       receipt = Receipt.find_by_id(params[:id]).first
 
-      render json: { "points": receipt.points }.to_json
-    rescue StandardError => e
-      render json: { "status": 404, "errors": "No receipt found for that id" }.to_json
+      render json: { "points": receipt.points }
+    rescue StandardError
+      render json: { "status": 404, "errors": "No receipt found for that id" }, status: 404
     end
   end
 end
