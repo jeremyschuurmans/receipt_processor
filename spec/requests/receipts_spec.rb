@@ -98,6 +98,7 @@ RSpec.describe "Receipts", type: :request do
     it "returns an error if a receipt cannot be found" do
       get "/receipts/1/points"
       response_body = JSON.parse(response.body)
+      
       expect(response.status).to eq(404)
       expect(response_body).to eq({"status"=>404, "errors"=>"No receipt found for that id"})
     end
