@@ -89,6 +89,7 @@ describe "PointCalculator" do
   describe "#process_every_two_items" do
     it "adds five points for every two items on the receipt" do
       expect(point_calculator_first_receipt.process_every_two_items).to eq(10)
+      expect(point_calculator_second_receipt.process_every_two_items).to eq(10)
     end
   end
 
@@ -124,15 +125,11 @@ describe "PointCalculator" do
 
   describe "#process_receipt" do
     it "calculates the correct number of points for a given receipt" do
-      processed_receipt = point_calculator_first_receipt.process_receipt
+      first_processed_receipt = point_calculator_first_receipt.process_receipt
+      second_processed_receipt = point_calculator_second_receipt.process_receipt
 
-      expect(processed_receipt).to eq(28)
-    end
-
-    it "calculates the correct number of points for a given receipt" do
-      processed_receipt = point_calculator_second_receipt.process_receipt
-
-      expect(processed_receipt).to eq(109)
+      expect(first_processed_receipt).to eq(28)
+      expect(second_processed_receipt).to eq(109)
     end
   end
 end

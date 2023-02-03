@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "Receipts", type: :request do
-  describe "POST /receipts/process" do
-    params = {
+  let(:params) {
+    {
       "retailer": "Target",
       "purchaseDate": "2022-01-01",
       "purchaseTime": "13:01",
@@ -26,7 +26,18 @@ RSpec.describe "Receipts", type: :request do
       ],
       "total": "35.35"
     }
+  }
 
+  let(:invalid_params) {
+    {
+      "retailer": "Target",
+      "purchaseDate": "2022-01-01",
+      "purchaseTime": "13:01",
+      "total": "35.35"
+    }
+  }
+
+  describe "POST /receipts/process" do
     it "returns a 200 response" do
       post "/receipts/process", params: params
 
@@ -53,34 +64,16 @@ RSpec.describe "Receipts", type: :request do
 
       expect(response_body).to eq({"id"=>"#{response_body["id"]}"})
     end
+
+    it "returns an error if an invalid receipt is submitted" do
+      post "/receipts/process", params: invalid_params
+      response_body = JSON.parse(response.body)
+
+      expect(response_body).to eq({"status"=>400, "errors"=>"The receipt is invalid"})
+    end
   end
 
   describe "GET /receipts/:id/points" do
-    params = {
-      "retailer": "Target",
-      "purchaseDate": "2022-01-01",
-      "purchaseTime": "13:01",
-      "items": [
-        {
-          "shortDescription": "Mountain Dew 12PK",
-          "price": "6.49"
-        },{
-          "shortDescription": "Emils Cheese Pizza",
-          "price": "12.25"
-        },{
-          "shortDescription": "Knorr Creamy Chicken",
-          "price": "1.26"
-        },{
-          "shortDescription": "Doritos Nacho Cheese",
-          "price": "3.35"
-        },{
-          "shortDescription": "   Klarbrunn 12-PK 12 FL OZ  ",
-          "price": "12.00"
-        }
-      ],
-      "total": "35.35"
-    }
-
     let(:receipt) { Receipt.new(params) }
 
     before do
@@ -99,6 +92,13 @@ RSpec.describe "Receipts", type: :request do
       response_body = JSON.parse(response.body)
 
       expect(response_body).to eq({"points" => 28})
+    end
+
+    it "returns an error if a receipt cannot be found" do
+      get "/receipts/1/points"
+      response_body = JSON.parse(response.body)
+
+      expect(response_body).to eq({"status"=>404, "errors"=>"No receipt found for that id"})
     end
   end
 end

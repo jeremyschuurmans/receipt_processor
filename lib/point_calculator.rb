@@ -23,7 +23,7 @@ class PointCalculator
 
   def process_round_dollar_amount_total
     # 50 points if the total is a round dollar amount with no cents
-    @receipt.total.split(".").last == "00" ? @points += 50 :  @points += 0
+    @receipt.total.split(".").last == "00" ? @points += 50 : @points += 0
   end
 
   def process_multiple_of_total
@@ -38,11 +38,11 @@ class PointCalculator
 
   def process_items_length
     # If the trimmed length of the item description is a multiple of 3, multiply the price by 0.2 and round up to the nearest integer
-    # The result is the number of points earned.
+    # The result is the number of points earned
     @receipt.items.each do |item|
-        if item[:shortDescription].strip.length % 3 == 0
-            @points += (item[:price].to_f * 0.2).ceil
-        end
+      if item[:shortDescription].strip.length % 3 == 0
+          @points += (item[:price].to_f * 0.2).ceil
+      end
     end
 
     @points

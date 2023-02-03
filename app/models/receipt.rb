@@ -5,7 +5,7 @@ class Receipt
   attr_accessor :id, :points
 
   @@receipts = []
-  # params["retailer"], params["purchaseDate"], params["purchaseTime"], params["items"], params["total"]
+  
   def initialize(params = {})
     @id = generate_uuid
     @retailer = params[:retailer]
