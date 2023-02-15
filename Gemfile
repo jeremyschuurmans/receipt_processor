@@ -41,3 +41,5 @@ group :development do
   # gem "spring"
 end
 
+
+gem "committee", "~> 5.0"

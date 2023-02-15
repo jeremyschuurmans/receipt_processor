@@ -35,5 +35,9 @@ module ReceiptProcessor
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Use Committee middleware to validate requests and responses according to schema definition.
+    config.middleware.use Committee::Middleware::RequestValidation, schema_path: './app/models/schemas/api.yml', strict_reference_validation: true
+    config.middleware.use Committee::Middleware::ResponseValidation, schema_path: './app/models/schemas/api.yml', strict_reference_validation: true
   end
 end
