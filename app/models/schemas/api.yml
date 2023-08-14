@@ -72,7 +72,7 @@ components:
                 retailer:
                     description: The name of the retailer or store the receipt is from.
                     type: string
-                    pattern: "^\\S+$"
+                    pattern: "\\S+"
                     example: "Target"
                 purchaseDate:
                     description: The date of the purchase printed on the receipt.
@@ -104,7 +104,7 @@ components:
                 shortDescription:
                     description: The Short Product Description for the item.
                     type: string
-                    pattern: "^\\S+$"
+                    pattern: "\\S+"
                     example: "Mountain Dew 12PK"
                 price:
                     description: The total price payed for this item.

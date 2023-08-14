@@ -37,40 +37,42 @@ RSpec.describe "Receipts", type: :request do
     }
   }
 
+  let(:headers) { { "content-type" => "application/json" } }
+
   describe "POST /receipts/process" do
     it "returns a 200 response" do
-      post "/receipts/process", params: params
+      post "/receipts/process", headers: headers, params: params.to_json
 
       expect(response.status).to eq(200)
     end
 
     it "calulates the points earned by the receipt" do
-      post "/receipts/process", params: params
+      post "/receipts/process", headers: headers, params: params.to_json
       response_body = JSON.parse(response.body)
 
       expect(Receipt.find_by_id(response_body["id"]).first.points).to eq(28)
     end
 
     it "saves the receipt in memory" do
-      post "/receipts/process", params: params
+      post "/receipts/process", headers: headers, params: params.to_json
       response_body = JSON.parse(response.body)
 
       expect(Receipt.find_by_id(response_body["id"]).first).to be_an_instance_of(Receipt)
     end
 
     it "returns the receipt id as json" do
-      post "/receipts/process", params: params
+      post "/receipts/process", headers: headers, params: params.to_json
       response_body = JSON.parse(response.body)
 
       expect(response_body).to eq({"id"=>"#{response_body["id"]}"})
     end
 
     it "returns an error if an invalid receipt is submitted" do
-      post "/receipts/process", params: invalid_params
+      post "/receipts/process", headers: headers, params: invalid_params.to_json
       response_body = JSON.parse(response.body)
 
       expect(response.status).to eq(400)
-      expect(response_body).to eq({"status"=>400, "errors"=>"The receipt is invalid"})
+      expect(response_body).to eq({"id"=>"bad_request", "message"=>"#/components/schemas/Receipt missing required parameters: items"})
     end
   end
 
